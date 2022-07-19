@@ -3,7 +3,10 @@ const WIDTH = 800;
 const HEIGHT = 500;
 canvas.width = WIDTH;
 canvas.height = HEIGHT;
-canvas.style.background = '#ddd';
+canvas.style.background = '#242F9B';
+canvas.style.borderRadius ="25px";
+canvas.style.marginLeft ="42rem"
+canvas.style.marginTop ="6rem"
 const context = canvas.getContext('2d');
 
 var keydowns = {};
@@ -148,4 +151,32 @@ Ball.prototype.update = function (playerPaddle, computerPaddle) {
         this.x = WIDTH / 2;
         this.y = HEIGHT / 2;
     }
+ // desarrollo de funcionalidad que permite las coliciones de la pelota con las raquetas
+  if (this.y > WIDTH / 2) {
+    if ((this.y - this.radius) < (playerPaddle.y + playerPaddle.height) && (this.y + this.radius) > playerPaddle.y && (this.x - this.radius) < (playerPaddle.x + playerPaddle.width) && (this.x + this.radius) > playerPaddle.x) {
+        this.ySpeed = -this.ySpeed;
+        this.xSpeed += (playerPaddle.xSpeed / 2);
+        this.y += this.ySpeed;
+    }
+} else {
+    if ((this.y - this.radius) < (computerPaddle.y + computerPaddle.height) && (this.y + this.radius) > computerPaddle.y && (this.x - this.radius) < (computerPaddle.x + computerPaddle.width) && (this.x + this.radius) > computerPaddle.x) {
+        this.ySpeed = -this.ySpeed;
+        this.x += (computerPaddle.xSpeed / 2);
+        this.y += this.ySpeed;
+    }
+}
+};
+//función que permite  escribir los puntajes en canvas cada ves que se anota un punto
+function drawText(text, x, y) {
+    context.fillStyle = "#111";
+    context.font = "40px fantasy";
+    context.fillText(text, x, y);
+}
+function drawGame() {
+    render();
+    update();
+    requestAnimationFrame(drawGame);
+}
+drawGame();
+
 
