@@ -44,7 +44,7 @@ Player.prototype.render = function () {
     this.paddle.render();
 }
 
-//Lógica para el movimiento de la raqueta del jugador según las teclas de flecha
+// Permite movimiento de la raqueta a través de las teclas del usuario
 Player.prototype.update = function () {
     for (let key in keydowns) {
         if (key == "ArrowLeft") {
@@ -56,5 +56,28 @@ Player.prototype.update = function () {
         }
     }
 }
+function Computer() {
+    this.paddle = new Paddle(WIDTH / 2 - 30, 0, 80, 20);
+}
+
+Computer.prototype.render = function () {
+    this.paddle.render();
+}
+
+//Función que se usa para seguir el movimiento de la pelota con la raqueta 
+Computer.prototype.update = function (ball) {
+    var diff = -((this.paddle.x + (this.paddle.width / 2) - ball.x));
+    if (diff < 0 && diff < -4) {
+        diff = -5;
+    } else if (diff > 0 && diff > 4) {
+        diff = 5;
+    }
+    this.paddle.move(diff, 0);
+    if (this.paddle.x < 0) {
+        this.paddle = 0;
+    } else if (this.x + this.width > WIDTH) {
+        this.x = WIDTH - this.width;
+    }
+};
 
 
