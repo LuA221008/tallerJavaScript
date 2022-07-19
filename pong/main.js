@@ -6,7 +6,7 @@ canvas.height = HEIGHT;
 canvas.style.background = '#242F9B';
 canvas.style.borderRadius ="25px";
 canvas.style.marginLeft ="42rem"
-canvas.style.marginTop ="6rem"
+canvas.style.marginTop ="6.5rem"
 const context = canvas.getContext('2d');
 
 var keydowns = {};
