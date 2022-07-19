@@ -141,7 +141,7 @@ Ball.prototype.update = function (playerPaddle, computerPaddle) {
         this.xSpeed = -this.xSpeed;
     }
     if (this.y - this.radius < 0 || this.y + this.radius > HEIGHT) {
-        if (this.y < 0) {
+        if (this.y - this.radius < 0) {
             playerScore += 1;
         } else if (this.y + this.radius > HEIGHT) {
             computerScore += 1;
