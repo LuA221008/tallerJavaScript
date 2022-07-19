@@ -80,4 +80,72 @@ Computer.prototype.update = function (ball) {
     }
 };
 
+function Ball(x, y) {
+    this.x = x;
+    this.y = y;
+    this.xSpeed = 0;
+    this.ySpeed = 3;
+    this.radius = 6;
+}
+
+Ball.prototype.render = function () {
+    context.beginPath();
+    context.fillStyle = "#111";
+    context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    context.fill();
+    context.closePath();
+}
+
+function Paddle(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.xSpeed = 0;
+    this.ySpeed = 0;
+}
+
+Paddle.prototype.render = function () {
+    context.beginPath();
+    context.fillStyle = "#111";
+    context.fillRect(this.x, this.y, this.width, this.height);
+    context.closePath();
+}
+
+//se realiza algoritmo que tiene la funcionalidad que permite mover la raquetas
+Paddle.prototype.move = function (x, y) {
+    this.x += x;
+    this.y = y;
+    this.xSpeed = x;
+    this.ySpeed = y;
+    if (this.x < 0) {
+        this.x = 0;
+        this.xSpeed = 0;
+    } else if (this.x + this.width > WIDTH) {
+        this.x = WIDTH - this.width;
+        this.xSpeed = 0;
+    }
+}
+//Permite actualizar el estado de la pelota y devolverla al centro siempre que se anote un punto
+Ball.prototype.update = function (playerPaddle, computerPaddle) {
+    this.x += this.xSpeed;
+    this.y += this.ySpeed;
+    if (this.x - this.radius < 0) {
+        this.x = 5;
+        this.xSpeed = -this.xSpeed;
+    } else if (this.x + this.radius > WIDTH) {
+        this.x = WIDTH - this.radius;
+        this.xSpeed = -this.xSpeed;
+    }
+    if (this.y - this.radius < 0 || this.y + this.radius > HEIGHT) {
+        if (this.y < 0) {
+            playerScore += 1;
+        } else if (this.y + this.radius > HEIGHT) {
+            computerScore += 1;
+        }
+        this.xSpeed = 0;
+        this.ySpeed = 4;
+        this.x = WIDTH / 2;
+        this.y = HEIGHT / 2;
+    }
 
